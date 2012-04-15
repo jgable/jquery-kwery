@@ -3,33 +3,33 @@
 
 #### Old and Busted
 
-var db = openDatabase("myDb", "1.0", "myDb Description", 5 * 1024 * 1024);
-db.transaction(function(tx) {
-  tx.executeSql("Select * from Task", [], function(result) {
+  var db = openDatabase("myDb", "1.0", "myDb Description", 5 * 1024 * 1024);
+  db.transaction(function(tx) {
+    tx.executeSql("Select * from Task", [], function(result) {
   
-    $.each(result.rows, function() {
-      // Do something with our Task
-    });
+      $.each(result.rows, function() {
+        // Do something with our Task
+      });
     
-  }, onError);
-});
+    }, onError);
+  });
 
 #### New Hotness
 
-$.kwery("Select * From Task")
- .then(function(tasks) {
+  $.kwery("Select * From Task")
+   .then(function(tasks) {
+      
+      $.each(tasks, function() {
+        // Do something with our Task
+      });
     
-    $.each(tasks, function() {
-      // Do something with our Task
-    });
-    
- }, onError);
+   }, onError);
  
- #### Batch it up
+#### Batch it up
  
- var newTasks = $.map(["money", "power", "ladies"], function(n, i) { 
-   return [ i, "Get the " + n ]; 
- });
- $.kwery.batch("Insert into Task (Id, Description) Values (?, ?)", newTasks);
+   var newTasks = $.map(["money", "power", "ladies"], function(n, i) { 
+     return [ i, "Get the " + n ]; 
+   });
+   $.kwery.batch("Insert into Task (Id, Description) Values (?, ?)", newTasks);
  
  
