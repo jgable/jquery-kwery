@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Kwery.js by jgable</title>
+    
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Kwery.js</h1>
+        <p>A jQuery plugin wrapper around common webSql functionality</p>
+        <p class="view"><a href="https://github.com/jgable/jquery-kwery">View the Project on GitHub <small>jgable/jquery-kwery</small></a></p>
+        <ul>
+          <li><a href="https://github.com/jgable/jquery-kwery/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/jgable/jquery-kwery/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/jgable/jquery-kwery">Fork On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>Tired of writing a bunch of boilerplate code to just get your webSql code running?  Kwery.js aims to abstract away some of the details and let you get messy with the stuff that matters.</p>
+
+<h4>Old and Busted</h4>
+
+<div class="highlight">
+<pre><span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">openDatabase</span><span class="p">(</span><span class="s2">"myDb"</span><span class="p">,</span> <span class="s2">"1.0"</span><span class="p">,</span> <span class="s2">"myDb Description"</span><span class="p">,</span> <span class="mi">5</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">);</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">transaction</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">tx</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">tx</span><span class="p">.</span><span class="nx">executeSql</span><span class="p">(</span><span class="s2">"Select * from Task"</span><span class="p">,</span> <span class="p">[],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">rows</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="c1">// Do something with our Task</span>
+    <span class="p">});</span>
+
+  <span class="p">},</span> <span class="nx">onError</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+</div>
+
+
+<h4>New Hotness</h4>
+
+<div class="highlight">
+<pre><span class="nx">$</span><span class="p">.</span><span class="nx">kwery</span><span class="p">(</span><span class="s2">"Select * From Task"</span><span class="p">)</span>
+ <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">tasks</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">tasks</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="c1">// Do something with our Task</span>
+    <span class="p">});</span>
+
+<span class="p">},</span> <span class="nx">onError</span><span class="p">);</span>
+</pre>
+</div>
+
+
+<h4>Batch it up</h4>
+
+<div class="highlight">
+<pre><span class="kd">var</span> <span class="nx">newTasks</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">map</span><span class="p">([</span><span class="s2">"money"</span><span class="p">,</span> <span class="s2">"power"</span><span class="p">,</span> <span class="s2">"ladies"</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span> 
+  <span class="k">return</span> <span class="p">[</span> <span class="nx">i</span><span class="p">,</span> <span class="s2">"Get the "</span> <span class="o">+</span> <span class="nx">n</span> <span class="p">];</span> 
+<span class="p">});</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">kwery</span><span class="p">.</span><span class="nx">batch</span><span class="p">(</span><span class="s2">"Insert into Task (Id, Description) Values (?, ?)"</span><span class="p">,</span> <span class="nx">newTasks</span><span class="p">);</span>
+</pre>
+</div>
+
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/jgable">jgable</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
